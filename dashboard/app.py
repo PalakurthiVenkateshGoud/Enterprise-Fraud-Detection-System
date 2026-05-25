@@ -1,21 +1,41 @@
 import streamlit as st
 import pandas as pd
 from PIL import Image
+import os
+
+# =========================================================
+# PAGE CONFIGURATION
+# =========================================================
 
 st.set_page_config(
-    page_title="Enterprise Fraud Intelligence System",
+    page_title="Enterprise Fraud Detection Intelligence System",
     page_icon="🛡️",
     layout="wide"
 )
 
-# =========================================
+# =========================================================
+# PATH CONFIGURATION
+# =========================================================
+
+BASE_DIR = os.path.dirname(
+    os.path.dirname(
+        os.path.abspath(__file__)
+    )
+)
+
+CHARTS_DIR = os.path.join(
+    BASE_DIR,
+    "charts"
+)
+
+# =========================================================
 # SIDEBAR
-# =========================================
+# =========================================================
 
 st.sidebar.title("Fraud Intelligence System")
 
 st.sidebar.markdown("""
-### Dashboard Sections
+## Dashboard Sections
 
 - Executive Overview
 - Fraud Analytics
@@ -29,35 +49,36 @@ st.sidebar.markdown("""
 st.sidebar.divider()
 
 st.sidebar.markdown("""
-### Project Information
+## Project Information
 
 - IEEE-CIS Fraud Detection
-- XGBoost Intelligence Model
-- Explainable AI using SHAP
-- Enterprise Risk Segmentation
+- XGBoost Fraud Intelligence
+- SHAP Explainability
+- Enterprise Risk Analytics
+- Fraud Segmentation System
 """)
 
-# =========================================
+# =========================================================
 # HEADER
-# =========================================
+# =========================================================
 
 st.title("Enterprise Fraud Detection Intelligence System")
 
 st.markdown("""
-Advanced fraud analytics platform powered by machine learning,
-Explainable AI, operational risk segmentation, and enterprise intelligence.
+Advanced enterprise fraud intelligence platform powered by machine learning,
+Explainable AI, operational risk segmentation, and fraud analytics.
 """)
 
-# =========================================
-# KPI SECTION
-# =========================================
+# =========================================================
+# EXECUTIVE METRICS
+# =========================================================
 
-st.subheader("Executive Overview")
+st.header("Executive Overview")
 
 col1, col2, col3, col4 = st.columns(4)
 
 col1.metric(
-    "Dataset Size",
+    "Transactions",
     "590K+"
 )
 
@@ -78,9 +99,9 @@ col4.metric(
 
 st.divider()
 
-# =========================================
+# =========================================================
 # TABS
-# =========================================
+# =========================================================
 
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "Fraud Analytics",
@@ -90,9 +111,9 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "Fraud Simulator"
 ])
 
-# =========================================
+# =========================================================
 # TAB 1 — FRAUD ANALYTICS
-# =========================================
+# =========================================================
 
 with tab1:
 
@@ -100,7 +121,7 @@ with tab1:
 
     st.markdown("""
     This section analyzes fraud behavior patterns,
-    transactional anomalies, and dataset characteristics.
+    transaction anomalies, and dataset intelligence.
     """)
 
     col1, col2 = st.columns(2)
@@ -110,7 +131,10 @@ with tab1:
         st.subheader("Fraud Distribution")
 
         fraud_img = Image.open(
-            "../charts/fraud_distribution.png"
+            os.path.join(
+                CHARTS_DIR,
+                "fraud_distribution.png"
+            )
         )
 
         st.image(
@@ -123,7 +147,10 @@ with tab1:
         st.subheader("Product Fraud Risk")
 
         product_img = Image.open(
-            "../charts/product_fraud_risk.png"
+            os.path.join(
+                CHARTS_DIR,
+                "product_fraud_risk.png"
+            )
         )
 
         st.image(
@@ -134,7 +161,10 @@ with tab1:
     st.subheader("Transaction Amount Risk Analysis")
 
     amount_img = Image.open(
-        "../charts/transaction_amount_risk.png"
+        os.path.join(
+            CHARTS_DIR,
+            "transaction_amount_risk.png"
+        )
     )
 
     st.image(
@@ -145,7 +175,10 @@ with tab1:
     st.subheader("Missing Values Analysis")
 
     missing_img = Image.open(
-        "../charts/missing_values_analysis.png"
+        os.path.join(
+            CHARTS_DIR,
+            "missing_values_analysis.png"
+        )
     )
 
     st.image(
@@ -153,15 +186,15 @@ with tab1:
         use_container_width=True
     )
 
-# =========================================
+# =========================================================
 # TAB 2 — MODEL PERFORMANCE
-# =========================================
+# =========================================================
 
 with tab2:
 
-    st.header("Machine Learning Performance")
+    st.header("Machine Learning Model Performance")
 
-    metrics = pd.DataFrame({
+    metrics_df = pd.DataFrame({
 
         "Model": [
             "Logistic Regression",
@@ -201,14 +234,17 @@ with tab2:
     })
 
     st.dataframe(
-        metrics,
+        metrics_df,
         use_container_width=True
     )
 
-    st.subheader("Model Comparison Visualization")
+    st.subheader("Model Comparison")
 
     model_img = Image.open(
-        "../charts/model_comparison.png"
+        os.path.join(
+            CHARTS_DIR,
+            "model_comparison.png"
+        )
     )
 
     st.image(
@@ -216,43 +252,42 @@ with tab2:
         use_container_width=True
     )
 
-    st.markdown("""
-    ### Why XGBoost Performed Best
+    st.success(
+        "XGBoost achieved the strongest fraud detection performance."
+    )
 
-    XGBoost achieved the strongest fraud discrimination
-    capability due to its ability to capture nonlinear
-    transaction behavior patterns and complex feature
-    interactions common in financial fraud systems.
-    """)
-
-# =========================================
+# =========================================================
 # TAB 3 — EXPLAINABLE AI
-# =========================================
+# =========================================================
 
 with tab3:
 
     st.header("Explainable AI & Fraud Intelligence")
 
     st.markdown("""
-    SHAP explainability provides transparency into
-    model predictions by identifying the features
-    contributing most strongly to fraud classification.
+    SHAP Explainability identifies which variables most strongly
+    influenced fraud predictions.
     """)
 
     shap_img = Image.open(
-        "../charts/shap_summary.png"
+        os.path.join(
+            CHARTS_DIR,
+            "shap_summary.png"
+        )
     )
 
     st.image(
         shap_img,
-        caption="SHAP Feature Contribution Analysis",
         use_container_width=True
     )
 
     st.subheader("Top Fraud Risk Features")
 
     feature_img = Image.open(
-        "../charts/top_fraud_features.png"
+        os.path.join(
+            CHARTS_DIR,
+            "top_fraud_features.png"
+        )
     )
 
     st.image(
@@ -260,18 +295,18 @@ with tab3:
         use_container_width=True
     )
 
-    st.markdown("""
-    ### Key Explainability Insights
-
-    - Behavioral transaction variables were dominant fraud drivers.
-    - Email domain intelligence contributed strongly to fraud prediction.
-    - Transaction frequency and anomaly variables influenced high-risk classification.
-    - Explainable AI improves analyst trust and operational transparency.
+    st.info("""
+    Key fraud drivers included:
+    - V257
+    - V258
+    - V201
+    - Transaction behavior variables
+    - Email intelligence patterns
     """)
 
-# =========================================
+# =========================================================
 # TAB 4 — RISK INTELLIGENCE
-# =========================================
+# =========================================================
 
 with tab4:
 
@@ -282,7 +317,10 @@ with tab4:
     with col1:
 
         risk_img = Image.open(
-            "../charts/risk_segmentation.png"
+            os.path.join(
+                CHARTS_DIR,
+                "risk_segmentation.png"
+            )
         )
 
         st.image(
@@ -293,7 +331,10 @@ with tab4:
     with col2:
 
         risk_rate_img = Image.open(
-            "../charts/risk_level_fraud_rate.png"
+            os.path.join(
+                CHARTS_DIR,
+                "risk_level_fraud_rate.png"
+            )
         )
 
         st.image(
@@ -301,26 +342,18 @@ with tab4:
             use_container_width=True
         )
 
-    st.markdown("""
-    ### Operational Risk Insights
-
-    - High-risk transactions showed extremely elevated fraud probability.
-    - Medium-risk transactions require secondary review workflows.
-    - Low-risk transactions demonstrated significantly lower fraud exposure.
-    - Risk segmentation enables efficient fraud investigation prioritization.
+    st.warning("""
+    High-risk transactions demonstrated significantly elevated
+    fraud probability requiring immediate analyst review.
     """)
 
-# =========================================
+# =========================================================
 # TAB 5 — FRAUD SIMULATOR
-# =========================================
+# =========================================================
 
 with tab5:
 
     st.header("Interactive Fraud Risk Simulator")
-
-    st.markdown("""
-    Simulate fraud risk scoring using transaction characteristics.
-    """)
 
     transaction_amt = st.slider(
         "Transaction Amount",
@@ -331,7 +364,7 @@ with tab5:
 
     product_code = st.selectbox(
         "Product Code",
-        ["W", "C", "H", "S", "R"]
+        ["W", "C", "H", "R", "S"]
     )
 
     email_risk = st.selectbox(
@@ -340,7 +373,7 @@ with tab5:
     )
 
     card_risk = st.selectbox(
-        "Card Risk Level",
+        "Card Risk",
         ["Low", "Medium", "High"]
     )
 
@@ -369,75 +402,55 @@ with tab5:
 
         if risk_score >= 75:
 
-            st.error("High Risk Transaction")
+            st.error(
+                "High Risk Transaction"
+            )
 
         elif risk_score >= 40:
 
-            st.warning("Medium Risk Transaction")
+            st.warning(
+                "Medium Risk Transaction"
+            )
 
         else:
 
-            st.success("Low Risk Transaction")
+            st.success(
+                "Low Risk Transaction"
+            )
 
-# =========================================
-# BUSINESS IMPACT
-# =========================================
+# =========================================================
+# BUSINESS INTELLIGENCE
+# =========================================================
 
 st.divider()
 
 st.header("Operational Fraud Intelligence Insights")
 
 st.markdown("""
-### Business Impact
+### Key Business Insights
 
-This enterprise fraud intelligence system demonstrates how
-machine learning and Explainable AI can support:
-
-- fraud prevention
-- operational monitoring
-- financial risk reduction
-- intelligent investigation prioritization
-- enterprise risk management
-- analyst decision support systems
+- XGBoost demonstrated highest fraud discrimination capability.
+- SHAP Explainability improved fraud transparency.
+- Product category C showed elevated fraud exposure.
+- Risk segmentation improved operational prioritization.
+- Fraud analytics supported intelligent monitoring workflows.
 
 ### Technical Highlights
 
-- XGBoost Fraud Intelligence Modeling
+- Enterprise Fraud Detection
 - Explainable AI using SHAP
-- Risk Segmentation Framework
-- Enterprise Dashboard Development
-- Fraud Analytics & Visualization
-- Operational Intelligence Reporting
+- XGBoost Intelligence Modeling
+- Fraud Risk Segmentation
+- Interactive Dashboard Deployment
+- Operational Fraud Analytics
 """)
 
-# =========================================
-# DOWNLOAD SECTION
-# =========================================
-
-st.divider()
-
-summary_text = """
-Enterprise Fraud Detection Intelligence System
-
-Key Highlights:
-- XGBoost achieved highest ROC-AUC
-- SHAP identified major fraud drivers
-- High-risk transactions showed elevated fraud exposure
-- Risk segmentation enabled operational prioritization
-"""
-
-st.download_button(
-    label="Download Fraud Intelligence Summary",
-    data=summary_text,
-    file_name="fraud_intelligence_summary.txt"
-)
-
-# =========================================
+# =========================================================
 # FOOTER
-# =========================================
+# =========================================================
 
 st.divider()
 
 st.caption(
-    "Developed by Palakurthi Venkatesh Goud | AI & Data Analytics Intern"
+    "Developed by Palakurthi Venkatesh Goud | AI & Data Analytics"
 )
