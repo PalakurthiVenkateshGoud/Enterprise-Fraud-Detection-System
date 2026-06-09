@@ -219,7 +219,4 @@ The system provides accurate fraud detection, interpretable predictions, and act
 Streamlit Deployment:
 https://enterprise-fraud-detection-system.streamlit.app/#fraud-distribution
 
-## Developed By
 
-Palakurthi Venkatesh Goud  
-AI & Data Analytics Intern
